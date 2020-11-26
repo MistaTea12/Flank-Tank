@@ -19,14 +19,16 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f962517-3c38-4416-8f80-a96c68f0a113" name="Default Changelist" comment="Added Flank Tank folder and all its contents." />
+    <list default="true" id="7f962517-3c38-4416-8f80-a96c68f0a113" name="Default Changelist" comment="Added Flank Tank folder and all its contents.">
+      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/client.py" root0="SKIP_INSPECTION" />

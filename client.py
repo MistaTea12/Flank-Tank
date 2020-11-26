@@ -1,3 +1,6 @@
+######################################
+# Author: Tyler Gassan
+######################################
 import os
 import random
 import socket
