@@ -60,6 +60,7 @@ for i in range(2):
     img_sm = pygame.transform.scale(img, (50, 50))
     bounce_anim['sm'].append(img_sm)
 
+# Shield item initializing ##############################################################################################
 shield_anim = {'lg': [], 'sm': []}
 for i in range(14):
     filename = 'sprites/shield/shield_item{}.png'.format(i)
@@ -877,6 +878,7 @@ def draw_text(surf, text, size, x, y, color):
 
 def resetGame():
     global speed, infinite, running, shooting, ability, special, timer, coop, shoot, amount, level, levelNum, score, nextLevel, player, specialAmmo, tankShield, special_ability,select
+
     speed = 1
     move_speed = 1
     upgrade = False
@@ -918,8 +920,6 @@ def resetGame():
     tankShield = Shield(sky_blue, player.rect.centerx, player.rect.centery, 90, 0)
     armor_bar = ProgressBar(100, tankShield.armor, (215, 25), sky_blue, gray, [15, SCREENHEIGHT - 65])
 
-
-players = []  # play object list
 ###############################################----Threads----###################################################################
 threads = []
 
@@ -970,22 +970,20 @@ def collisions():
         all_sprites_list.remove(enemyTanker)
         enemies.remove(enemyTanker)
 
-    for bullet in enemy_bullet_list:  # Checking if enemy bullet collided with shield
-        shield_hit_list = pygame.sprite.pygame.sprite.spritecollide(bullet, shields, False)
-        if shield_hit_list:
-            exp = Explosion(bullet.rect.center, 'sm')
-            all_sprites_list.remove(bullet)
-            enemy_bullet_list.remove(bullet)
-            if tankShield.armor > 0:
-                tankShield.damage(25)
-
     for bullets in enemy_bullet_list:  # Checking if enemy bullet collided with player
         player_hit_list = pygame.sprite.spritecollide(bullets, players_list, False)
+        shield_hit_list = pygame.sprite.pygame.sprite.spritecollide(bullets, shields, False)
         if player_hit_list:
-            exp = Explosion(bullets.rect.center, 'sm')
+            Explosion(bullets.rect.center, 'sm')
             all_sprites_list.remove(bullets)
             enemy_bullet_list.remove(bullets)
             player.damage(50)
+        elif shield_hit_list:
+            Explosion(bullets.rect.center, 'sm')
+            all_sprites_list.remove(bullets)
+            enemy_bullet_list.remove(bullets)
+            if tankShield.armor > 0:
+                tankShield.damage(25)
 
     for bullet in bullet_list:  # Checking if player bullet collided with enemy
         enemy_hit_list = pygame.sprite.spritecollide(bullet, enemies, False)
@@ -1092,7 +1090,7 @@ def startGame():
         window.blit(BACKGROUND, (0, 0))
         createLevel()
 
-        # START THREADS ------------------------------------------------
+        # START THREADS ------------------------------------------------a
         run_shoot()
         collisions()
         wallCollisions()

@@ -19,12 +19,9 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f962517-3c38-4416-8f80-a96c68f0a113" name="Default Changelist" comment="Added level selection in main menu.">
+    <list default="true" id="7f962517-3c38-4416-8f80-a96c68f0a113" name="Default Changelist" comment="Changed reset logic and new store button additions.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/levels.py" beforeDir="false" afterPath="$PROJECT_DIR$/levels.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store.py" beforeDir="false" afterPath="$PROJECT_DIR$/store.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +49,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/client.py" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/client.py" />
   </component>
   <component name="RunManager">
     <configuration name="client" type="PythonConfigurationType" factoryName="Python">
@@ -99,7 +97,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606452784394</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Changed reset logic and new store button additions.">
+      <created>1606511284275</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1606511284275</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -129,7 +134,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added Flank Tank folder and all its contents." />
     <MESSAGE value="Added level selection in main menu." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added level selection in main menu." />
+    <MESSAGE value="Changed reset logic and new store button additions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed reset logic and new store button additions." />
   </component>
   <component name="WindowStateProjectService">
     <state x="586" y="198" key="#Inspections" timestamp="1606375988656">
@@ -144,30 +150,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="642" y="323" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606447270944" />
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1606456538800">
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1606511760112">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606456538800" />
-    <state x="740" y="287" key="FileChooserDialogImpl" timestamp="1606500677714">
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606511760112" />
+    <state x="740" y="287" key="FileChooserDialogImpl" timestamp="1606511234970">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="287" key="FileChooserDialogImpl/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606500677714" />
-    <state width="1900" height="129" key="GridCell.Tab.0.bottom" timestamp="1606510638691">
+    <state x="740" y="287" key="FileChooserDialogImpl/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606511234970" />
+    <state width="1900" height="129" key="GridCell.Tab.0.bottom" timestamp="1606512976221">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1900" height="129" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606510638691" />
-    <state width="1900" height="129" key="GridCell.Tab.0.center" timestamp="1606510638691">
+    <state width="1900" height="129" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606512976221" />
+    <state width="1900" height="129" key="GridCell.Tab.0.center" timestamp="1606512976219">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1900" height="129" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606510638691" />
-    <state width="1900" height="129" key="GridCell.Tab.0.left" timestamp="1606510638690">
+    <state width="1900" height="129" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606512976219" />
+    <state width="1900" height="129" key="GridCell.Tab.0.left" timestamp="1606512976219">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1900" height="129" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606510638690" />
-    <state width="1900" height="129" key="GridCell.Tab.0.right" timestamp="1606510638691">
+    <state width="1900" height="129" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606512976219" />
+    <state width="1900" height="129" key="GridCell.Tab.0.right" timestamp="1606512976220">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1900" height="129" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606510638691" />
+    <state width="1900" height="129" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606512976220" />
     <state width="1900" height="167" key="GridCell.Tab.1.bottom" timestamp="1606456538758">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -192,9 +198,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="619" y="144" key="SettingsEditor/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606442298907" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606452850957">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606511775364">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606452850957" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606511775364" />
   </component>
 </project>
