@@ -20,7 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f962517-3c38-4416-8f80-a96c68f0a113" name="Default Changelist" comment="Added Flank Tank folder and all its contents.">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/store.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/levels.py" beforeDir="false" afterPath="$PROJECT_DIR$/levels.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,20 +33,24 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/client.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectId" id="1kokPa0wzS7MPA0ufi6qlZjcNEJ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/client.py" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
   </component>
   <component name="RunManager">
     <configuration name="client" type="PythonConfigurationType" factoryName="Python">
@@ -123,26 +131,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="175" width="1092" height="786" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606376128105" />
+    <state x="642" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606447270944">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="642" y="323" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606447270944" />
     <state x="740" y="287" key="FileChooserDialogImpl" timestamp="1606412707287">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="287" key="FileChooserDialogImpl/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606412707287" />
-    <state width="1900" height="129" key="GridCell.Tab.0.bottom" timestamp="1606413313196">
+    <state width="1900" height="129" key="GridCell.Tab.0.bottom" timestamp="1606448442286">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1900" height="129" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606413313196" />
-    <state width="1900" height="129" key="GridCell.Tab.0.center" timestamp="1606413313196">
+    <state width="1900" height="129" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606448442286" />
+    <state width="1900" height="129" key="GridCell.Tab.0.center" timestamp="1606448442286">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1900" height="129" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606413313196" />
-    <state width="1900" height="129" key="GridCell.Tab.0.left" timestamp="1606413313196">
+    <state width="1900" height="129" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606448442286" />
+    <state width="1900" height="129" key="GridCell.Tab.0.left" timestamp="1606448442286">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1900" height="129" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606413313196" />
-    <state width="1900" height="129" key="GridCell.Tab.0.right" timestamp="1606413313196">
+    <state width="1900" height="129" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606448442286" />
+    <state width="1900" height="129" key="GridCell.Tab.0.right" timestamp="1606448442286">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1900" height="129" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606413313196" />
+    <state width="1900" height="129" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606448442286" />
     <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1606376717949">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -159,10 +171,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1899" height="348" key="GridCell.Tab.1.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606376717949" />
-    <state x="619" y="144" key="SettingsEditor" timestamp="1606412761572">
+    <state x="619" y="144" key="SettingsEditor" timestamp="1606442298907">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="619" y="144" key="SettingsEditor/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606412761572" />
+    <state x="619" y="144" key="SettingsEditor/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606442298907" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606412933338">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

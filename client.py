@@ -8,7 +8,7 @@ import subprocess
 import threading
 import time
 import math
-
+from store import *
 import pygame
 from pygame.math import Vector2
 from pygame.rect import *
@@ -451,7 +451,7 @@ class Bounce(pygame.sprite.Sprite):
 
 
 # Create particle effects ##############################################################################################
-class Particle():
+class Particle:
 
     def __init__(self, location, color, size):
         super().__init__()
@@ -479,7 +479,7 @@ class Particle():
 
 
 # Creat progress bars for related object ##############################################################################################
-class ProgressBar():
+class ProgressBar:
 
     def __init__(self, max_bar, progress, size, barColor, borderColor, position):
         self.max_bar = max_bar
@@ -586,7 +586,7 @@ class PickUps(pygame.sprite.Sprite):
 
 
 # Creates connection with server ##############################################################################################
-class Network():
+class Network:
 
     def __init__(self):
         global allyLocation, host
@@ -735,11 +735,13 @@ def createLevel():
     if not enemies:  # and not coop:
         nextLevel = True
     if nextLevel:
-        fadeOut()
         level += 1
         if levelNum == len(levelMap):
             endGame(1)
             return
+        if levelNum != 0:
+            completionScreen()
+        loadingScreen()
         pickups.empty()
         enemy_bullet_list.empty()
         bullet_list.empty()
@@ -779,7 +781,7 @@ def createLevel():
 
 
 #####################################----MENUS----#########################################################
-def fadeOut():
+def loadingScreen():
     ending = True
     t = 500
     while t > 0:
@@ -788,13 +790,26 @@ def fadeOut():
         s.fill(black)
         window.blit(s, (0, 0))
         if t > 250:
-            draw_text(window, "LOADING....", 100, SCREENWIDTH / 2, SCREENHEIGHT / 3, blue)
+            draw_text(window, "LEVEL " + str(levelNum + 1), 150, SCREENWIDTH / 2, SCREENHEIGHT / 3, red)
+            draw_text(window, "SCORE: " + str(score), 50, SCREENWIDTH / 2, SCREENHEIGHT / 3 + 150, white)
+            draw_text(window, "LOADING....", 50, SCREENWIDTH - 250, SCREENHEIGHT - 100, blue)
+
         else:
-            draw_text(window, "LOADING..  ", 100, SCREENWIDTH / 2, SCREENHEIGHT / 3, blue)
+            draw_text(window, "LEVEL " + str(levelNum + 1), 150, SCREENWIDTH / 2, SCREENHEIGHT / 3, red)
+            draw_text(window, "SCORE: " + str(score), 50, SCREENWIDTH / 2, SCREENHEIGHT / 3 + 150, white)
+            draw_text(window, "LOADING..  ", 50, SCREENWIDTH - 250, SCREENHEIGHT - 100, blue)
         t -= 4
         pygame.display.update()
         clock.tick(60)
 
+def completionScreen():
+    ending = True
+    t = 400
+    while t > 0:
+        draw_text(window, "LEVEL COMPLETE", 200, SCREENWIDTH / 2, SCREENHEIGHT / 3, green)
+        t -= 4
+        pygame.display.update()
+        clock.tick(60)
 
 def pauseGame():
     ending = True
@@ -1156,8 +1171,7 @@ def startGame():
 # Creates clickable buttons ###############################################################
 buttons = []
 
-
-class Button():
+class Button:
 
     def __init__(self, text, x, y, w, h, color):
         self.width = w
@@ -1238,7 +1252,7 @@ def main():
         # Check if any of the buttons were clicked -------
         if not option:
             if startButton.click:
-                fadeOut()
+                loadingScreen()
                 startGame()
             if coopCreate.click:
                 coop = True
