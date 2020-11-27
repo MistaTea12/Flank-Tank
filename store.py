@@ -1,25 +1,27 @@
-import os
-import random
-import time
-import math
-
-import pygame
-from pygame.math import Vector2
-from pygame.rect import *
 
 from config import *
+from client import Button
 
 
 class Shop:
 
 	def __init__(self):
-		pass
+		self.skins = []
+		self.buttons = []
+		self.addSkins()
+		self.button()
 
-	def skins(self):
-		pass
+	def addSkins(self):
+		for i in range(2):
+			self.skins.append('sprites/skins/skin{}.png'.format(i))
 
 	def button(self):
-		pass
+		x = 75
+		i = 1
+		for skin in self.skins:
+			self.buttons.append(Button(str(i), SCREENWIDTH / 3 + x, SCREENHEIGHT / 2, 50, 50, blue))
+			x += 100
+			i += 1
 
 	def buy(self):
 		pass
@@ -30,5 +32,11 @@ class Shop:
 	def changeSkin(self):
 		pass
 
+	def draw(self):
+		for button in self.buttons:
+			if button.click:
+				print("BOUGHT")
+			button.draw()
+
 	def update(self):
-		pass
+		self.draw()

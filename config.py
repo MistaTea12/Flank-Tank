@@ -28,6 +28,9 @@ coop = False
 shoot = 0
 allyLocation = [0, 0]
 select = False
+# Store -----------------------------------------
+store = False
+skins = []
 # Network -------------------------------------------------
 serverIP = socket.gethostname()
 host = False

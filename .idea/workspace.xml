@@ -19,10 +19,12 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f962517-3c38-4416-8f80-a96c68f0a113" name="Default Changelist" comment="Added Flank Tank folder and all its contents.">
+    <list default="true" id="7f962517-3c38-4416-8f80-a96c68f0a113" name="Default Changelist" comment="Added level selection in main menu.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/levels.py" beforeDir="false" afterPath="$PROJECT_DIR$/levels.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store.py" beforeDir="false" afterPath="$PROJECT_DIR$/store.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +47,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/client.py" />
@@ -89,7 +92,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606412851910</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added level selection in main menu.">
+      <created>1606452784394</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1606452784394</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -118,7 +128,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added Flank Tank folder and all its contents." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Flank Tank folder and all its contents." />
+    <MESSAGE value="Added level selection in main menu." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added level selection in main menu." />
   </component>
   <component name="WindowStateProjectService">
     <state x="586" y="198" key="#Inspections" timestamp="1606375988656">
@@ -133,49 +144,57 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="642" y="323" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606447270944" />
-    <state x="740" y="287" key="FileChooserDialogImpl" timestamp="1606412707287">
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1606456538800">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="287" key="FileChooserDialogImpl/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606412707287" />
-    <state width="1900" height="129" key="GridCell.Tab.0.bottom" timestamp="1606452460833">
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606456538800" />
+    <state x="740" y="287" key="FileChooserDialogImpl" timestamp="1606500677714">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1900" height="129" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606452460833" />
-    <state width="1900" height="129" key="GridCell.Tab.0.center" timestamp="1606452460833">
+    <state x="740" y="287" key="FileChooserDialogImpl/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606500677714" />
+    <state width="1900" height="129" key="GridCell.Tab.0.bottom" timestamp="1606510638691">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1900" height="129" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606452460833" />
-    <state width="1900" height="129" key="GridCell.Tab.0.left" timestamp="1606452460832">
+    <state width="1900" height="129" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606510638691" />
+    <state width="1900" height="129" key="GridCell.Tab.0.center" timestamp="1606510638691">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1900" height="129" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606452460832" />
-    <state width="1900" height="129" key="GridCell.Tab.0.right" timestamp="1606452460833">
+    <state width="1900" height="129" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606510638691" />
+    <state width="1900" height="129" key="GridCell.Tab.0.left" timestamp="1606510638690">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1900" height="129" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606452460833" />
-    <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1606376717949">
+    <state width="1900" height="129" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606510638690" />
+    <state width="1900" height="129" key="GridCell.Tab.0.right" timestamp="1606510638691">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606376717949" />
-    <state width="1899" height="348" key="GridCell.Tab.1.center" timestamp="1606376717949">
+    <state width="1900" height="129" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606510638691" />
+    <state width="1900" height="167" key="GridCell.Tab.1.bottom" timestamp="1606456538758">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606376717949" />
-    <state width="1899" height="348" key="GridCell.Tab.1.left" timestamp="1606376717949">
+    <state width="1900" height="167" key="GridCell.Tab.1.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606456538758" />
+    <state width="1900" height="167" key="GridCell.Tab.1.center" timestamp="1606456538758">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606376717949" />
-    <state width="1899" height="348" key="GridCell.Tab.1.right" timestamp="1606376717949">
+    <state width="1900" height="167" key="GridCell.Tab.1.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606456538758" />
+    <state width="1900" height="167" key="GridCell.Tab.1.left" timestamp="1606456538758">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606376717949" />
+    <state width="1900" height="167" key="GridCell.Tab.1.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606456538758" />
+    <state width="1900" height="167" key="GridCell.Tab.1.right" timestamp="1606456538758">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1900" height="167" key="GridCell.Tab.1.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606456538758" />
+    <state x="711" y="223" key="RollbackChangesDialog" timestamp="1606456501366">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="711" y="223" key="RollbackChangesDialog/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606456501366" />
     <state x="619" y="144" key="SettingsEditor" timestamp="1606442298907">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="619" y="144" key="SettingsEditor/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606442298907" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606412933338">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606452850957">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606412933338" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1606452850957" />
   </component>
 </project>
