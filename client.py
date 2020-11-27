@@ -739,7 +739,7 @@ def createLevel():
         if levelNum == len(levelMap):
             endGame(1)
             return
-        if levelNum != 0:
+        if levelNum != 0 and not select:
             completionScreen()
         loadingScreen()
         pickups.empty()
@@ -876,7 +876,7 @@ def draw_text(surf, text, size, x, y, color):
 
 
 def resetGame():
-    global speed, infinite, running, shooting, ability, special, timer, coop, shoot, amount, level, levelNum, score, nextLevel, player
+    global speed, infinite, running, shooting, ability, special, timer, coop, shoot, amount, level, levelNum, score, nextLevel, player, specialAmmo, tankShield, special_ability
     speed = 1
     move_speed = 1
     upgrade = False
@@ -913,9 +913,8 @@ def resetGame():
     players = []
     player = Tank()
     player.rect.center = [200, 500]
-    special_ability = ProgressBar(60, specialAmmo, (215, 25), purple, gray, [15, SCREENHEIGHT - 35])
-    tankShield = Shield(sky_blue, player.rect.centerx, player.rect.centery, 90, 0)
-    armor_bar = ProgressBar(100, tankShield.armor, (215, 25), sky_blue, gray, [15, SCREENHEIGHT - 65])
+    special_ability.progress = 0
+    tankShield.armor = 0
 
 
 players = []  # play object list
@@ -1071,8 +1070,8 @@ clock = pygame.time.Clock()
 
 
 def startGame():
-    global score, addDifficulty, all_sprites_list, timer, nextLevel, laser_sight, specialAmmo, infinite, running, player, enemies, special_ability, shoot, coop
-    if levelNum == 0:
+    global score, addDifficulty, all_sprites_list, timer, nextLevel, laser_sight, specialAmmo, infinite, running, player, enemies, special_ability, shoot, coop, select
+    if levelNum == 0 or select:
         for enemy in enemies:
             all_sprites_list.remove(enemy)
         enemies.empty()
@@ -1197,21 +1196,30 @@ class Button:
         label_rect = label.get_rect(center=(self.x + self.width / 2, self.y + self.height / 2))
         window.blit(label, label_rect)
 
-
+#Main menu screen ###############################################################
 def main():
-    global god, coop, infinite, host
+    global god, coop, infinite, host, levelNum, select
     option = False
     coop = False
     pygame.mouse.set_visible(True)  # show the cursor
+
     # CREATE MENU BUTTONS -------------------------------------------------------
     startButton = Button("PLAY", SCREENWIDTH / 2, SCREENHEIGHT / 2, 450, 50, blue)
+    levelSelect = Button("Select Level", SCREENWIDTH / 2 + 350, SCREENHEIGHT / 2, 200, 50, navy_blue)
     coopCreate = Button("Create Coop", SCREENWIDTH / 2 - 125, SCREENHEIGHT / 2 + 100, 200, 50, dark_gray)
     coopJoin = Button("Join Coop", SCREENWIDTH / 2 + 125, SCREENHEIGHT / 2 + 100, 200, 50, dark_gray)
     optionsButton = Button("Options", SCREENWIDTH / 2, SCREENHEIGHT / 2 + 200, 450, 50, dark_gray)
     quitButton = Button("Exit Game", SCREENWIDTH / 2, SCREENHEIGHT / 2 + 300, 450, 50, dark_gray)
+    # Options buttons ---
     godButton = Button("GOD MODE", SCREENWIDTH / 2 - 125, SCREENHEIGHT / 2 + 50, 200, 50, red)
     infButton = Button("INFINITE", SCREENWIDTH / 2 + 125, SCREENHEIGHT / 2 + 50, 200, 50, red)
     back = Button("Back", SCREENWIDTH / 2, SCREENHEIGHT / 2 + 150, 450, 50, dark_gray)
+    #Level select buttons ---
+    lb = []
+    x = 75
+    for i in range(len(levelMap)):
+        lb.append(Button(str(i + 1),SCREENWIDTH/3 + x, SCREENHEIGHT/2,50,50,blue))
+        x += 100
 
     y = 25
     for i in range(8):
@@ -1250,10 +1258,12 @@ def main():
         draw_text(window, "FLANK TANK", 200, SCREENWIDTH / 2, 250, green)
 
         # Check if any of the buttons were clicked -------
-        if not option:
+        if not option and not select:
             if startButton.click:
                 loadingScreen()
                 startGame()
+            if levelSelect.click:
+                select = True
             if coopCreate.click:
                 coop = True
                 host = True
@@ -1268,11 +1278,12 @@ def main():
 
             # draw buttons ---------------
             startButton.draw()
+            levelSelect.draw()
             coopCreate.draw()
             coopJoin.draw()
             optionsButton.draw()
             quitButton.draw()
-        else:  # options menu
+        if option:  # options menu
             if godButton.click:
                 god = True
                 godButton.color = green
@@ -1283,6 +1294,18 @@ def main():
                 option = False
             godButton.draw()
             infButton.draw()
+            back.draw()
+        if select:
+            i = 0
+            for button in lb:
+                if button.click:
+                    levelNum = i
+                    loadingScreen()
+                    startGame()
+                i += 1
+                button.draw()
+            if back.click:
+                select = False
             back.draw()
 
         clock.tick(60)

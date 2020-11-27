@@ -27,7 +27,7 @@ timer = 100
 coop = False
 shoot = 0
 allyLocation = [0, 0]
-
+select = False
 # Network -------------------------------------------------
 serverIP = socket.gethostname()
 host = False
