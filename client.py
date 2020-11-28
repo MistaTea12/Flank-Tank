@@ -661,7 +661,7 @@ class Network:
 
     def startServer(self):
         try:
-            server = subprocess.Popen(['server.bat'])
+            server = subprocess.Popen(['python','server.py'])
             return server
         except Exception as e:
             print("Start server error:", e)
@@ -682,8 +682,7 @@ class Network:
             while wait:
                 window.blit(BACKGROUND, (0, 0))
                 draw_text(window, "Waiting for another player...", 75, SCREENWIDTH / 2, SCREENHEIGHT / 2 - 100, green)
-                draw_text(window, "When other player has connected, game will start.", 30, SCREENWIDTH / 2,
-                          SCREENHEIGHT / 2, white)
+                draw_text(window, "When other player has connected, game will start.", 30, SCREENWIDTH / 2, SCREENHEIGHT / 2, white)
                 draw_text(window, "Press [ESC] to quit", 30, 175, 30, white)
                 pygame.display.update()
                 for event in pygame.event.get():
@@ -1075,7 +1074,7 @@ def startGame():
         for enemy in enemies:
             all_sprites_list.remove(enemy)
         enemies.empty()
-    createLevel()
+
     if coop:
         try:
             coopGame = Network()  # Create new connection
@@ -1083,7 +1082,7 @@ def startGame():
             print("Starting coop error:", e)
             coop = False
             main()
-
+    createLevel()
     # Running game ---------------------------
     while running:
         Particle(player.rect.center, gray, 10)
