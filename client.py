@@ -130,8 +130,7 @@ class Tank(pygame.sprite.Sprite):
         self.image = sprite_pool.get('PLAYER')
         self.rect = self.image.get_rect()
         self.health = 100
-        self.health_bar = ProgressBar(self.health, self.health, (100, 10), green, gray, [self.rect.x,
-                                                                                         self.rect.y - 15])  # max_bar, progress, size, barColor, borderColor, position
+        self.health_bar = ProgressBar(self.health, self.health, (100, 10), green, gray, [self.rect.x, self.rect.y - 15])  # max_bar, progress, size, barColor, borderColor, position
         self.turret = Turret(self, pygame.mouse.get_pos(), 1)
         self.rotate = 0
         players_list.add(self)
@@ -147,22 +146,22 @@ class Tank(pygame.sprite.Sprite):
             move_speed = 1
         if (key[pygame.K_a] and not (key[pygame.K_w] or key[pygame.K_s])) and self.rect.x > 0:
             if wall_hit:
-                self.rect.x += 2
+                self.rect.x += 5
             self.rect.move_ip(move_speed * -1, 0)
             self.rotate = 2
         elif (key[pygame.K_d] and not (key[pygame.K_w] or key[pygame.K_s])) and self.rect.x < 1845:
             if wall_hit:
-                self.rect.x -= 2
+                self.rect.x -= 5
             self.rect.move_ip(move_speed, 0)
             self.rotate = 3
         if key[pygame.K_w] and self.rect.y > 0:
             if wall_hit:
-                self.rect.y += 2
+                self.rect.y += 5
             self.rect.move_ip(0, move_speed * -1)
             self.rotate = 0
         elif key[pygame.K_s] and self.rect.y < 988:
             if wall_hit:
-                self.rect.y -= 2
+                self.rect.y -= 5
             self.rect.move_ip(0, move_speed)
             self.rotate = 1
         self.image = sprite_pool.get('PLAYER_rot_' + str(self.rotate))
@@ -239,7 +238,7 @@ class Enemy(pygame.sprite.Sprite):
             self.color = purple
         elif strength == 2:
             self.color = yellow
-            
+
         self.image = sprite_pool.get('ENEMY_' + str(strength))
         self.rect = self.image.get_rect()
         self.speed = speed
@@ -385,11 +384,11 @@ class Bullet(pygame.sprite.Sprite):
 
         block_vec_x = (cursor_pos_x - player_pos_x)
         block_vec_y = (cursor_pos_y - player_pos_y)
-        vec_length = 1 / 4 * math.sqrt(block_vec_x ** 2 + block_vec_y ** 2)
+        vec_length = math.floor(1 / 4 * math.sqrt(block_vec_x ** 2 + block_vec_y ** 2))
         block_vec_y = (block_vec_y / vec_length) * self.bulletSpeed
         block_vec_x = (block_vec_x / vec_length) * self.bulletSpeed
-        self.change_y += block_vec_y
-        self.change_x += block_vec_x
+        self.change_y += math.floor(block_vec_y)
+        self.change_x += math.floor(block_vec_x)
 
     def bounce(self):
         if self.bounces == bounceNum:
