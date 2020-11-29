@@ -111,6 +111,7 @@ for i in range(2):
     img_sm = pygame.transform.scale(img, (50, 50))
     bounce_anim['sm'].append(img_sm)
 
+# Shield item initializing ##############################################################################################
 shield_anim = {'lg': [], 'sm': []}
 for i in range(14):
     img = sprite_pool.get('SHIELD_rot_' + str(i))
@@ -703,7 +704,7 @@ class Network:
 
     def startServer(self):
         try:
-            server = subprocess.Popen(['server.bat'])
+            server = subprocess.Popen(['python','server.py'])
             return server
         except Exception as e:
             print("Start server error:", e)
@@ -724,8 +725,7 @@ class Network:
             while wait:
                 window.blit(BACKGROUND, (0, 0))
                 draw_text(window, "Waiting for another player...", 75, SCREENWIDTH / 2, SCREENHEIGHT / 2 - 100, green)
-                draw_text(window, "When other player has connected, game will start.", 30, SCREENWIDTH / 2,
-                          SCREENHEIGHT / 2, white)
+                draw_text(window, "When other player has connected, game will start.", 30, SCREENWIDTH / 2, SCREENHEIGHT / 2, white)
                 draw_text(window, "Press [ESC] to quit", 30, 175, 30, white)
                 pygame.display.update()
                 for event in pygame.event.get():
@@ -770,7 +770,7 @@ class Level(pygame.sprite.Sprite):
 
 # Create Level ##############################################################################################
 def createLevel():
-    global nextLevel, levelMap, levelMap2, levelMap3, levelNum, level, coop, allyLocation
+    global nextLevel, levelMap, levelMap2, levelMap3, levelNum, level, coop, allyLocation, infinite
     if infinite:
         levelMap = levelMap2
     # if coop:
@@ -827,18 +827,21 @@ def createLevel():
 def loadingScreen():
     ending = True
     t = 500
+    level = str(levelNum + 1)
+    if infinite:
+        level = "Infinite"
     while t > 0:
         s = pygame.Surface((SCREENWIDTH, SCREENWIDTH))
         s.set_alpha(25)
         s.fill(black)
         window.blit(s, (0, 0))
         if t > 250:
-            draw_text(window, "LEVEL " + str(levelNum + 1), 150, SCREENWIDTH / 2, SCREENHEIGHT / 3, red)
+            draw_text(window, "LEVEL " + level, 150, SCREENWIDTH / 2, SCREENHEIGHT / 3, red)
             draw_text(window, "SCORE: " + str(score), 50, SCREENWIDTH / 2, SCREENHEIGHT / 3 + 150, white)
             draw_text(window, "LOADING....", 50, SCREENWIDTH - 250, SCREENHEIGHT - 100, blue)
 
         else:
-            draw_text(window, "LEVEL " + str(levelNum + 1), 150, SCREENWIDTH / 2, SCREENHEIGHT / 3, red)
+            draw_text(window, "LEVEL " + level, 150, SCREENWIDTH / 2, SCREENHEIGHT / 3, red)
             draw_text(window, "SCORE: " + str(score), 50, SCREENWIDTH / 2, SCREENHEIGHT / 3 + 150, white)
             draw_text(window, "LOADING..  ", 50, SCREENWIDTH - 250, SCREENHEIGHT - 100, blue)
         t -= 4
@@ -919,7 +922,8 @@ def draw_text(surf, text, size, x, y, color):
 
 
 def resetGame():
-    global speed, infinite, running, shooting, ability, special, timer, coop, shoot, amount, level, levelNum, score, nextLevel, player, specialAmmo, tankShield, special_ability
+    global speed, infinite, running, shooting, ability, special, timer, coop, shoot, amount, level, levelNum, score, nextLevel, player, specialAmmo, tankShield, special_ability,select
+
     speed = 1
     move_speed = 1
     upgrade = False
@@ -943,6 +947,7 @@ def resetGame():
     level = 0
     score = 0
     nextLevel = True
+    select = False
 
     all_sprites_list.empty()
     bullet_list.empty()
@@ -956,11 +961,10 @@ def resetGame():
     players = []
     player = Tank()
     player.rect.center = [200, 500]
-    special_ability.progress = 0
-    tankShield.armor = 0
+    special_ability = ProgressBar(60, 0, (215, 25), purple, gray, [15, SCREENHEIGHT - 35])
+    tankShield = Shield(sky_blue, player.rect.centerx, player.rect.centery, 90, 0)
+    armor_bar = ProgressBar(100, tankShield.armor, (215, 25), sky_blue, gray, [15, SCREENHEIGHT - 65])
 
-
-players = []  # play object list
 ###############################################----Threads----###################################################################
 threads = []
 
@@ -1046,13 +1050,13 @@ def collisions():
 
 
 def wallCollisions():
-    for bullet in bullet_list:  # check if bullet collided with walls
+    for bullet in bullet_list:  # check if bullet collided with window wall
         if (bullet.rect.y < 0 or bullet.rect.y > 1080) or (bullet.rect.x < 0 or bullet.rect.x > 1920):
             b = Bounce(bullet.rect.center, 'lg')
             bullet.bounce()
 
         wall_hit = pygame.sprite.spritecollide(bullet, walls, False)
-        if wall_hit:
+        if wall_hit: #checking if bullet collided with level walls
             for wall in wall_hit:
                 if bullet.rect.collidepoint(bullet.rect.centerx, bullet.rect.centery):
                     if wall.breakable:
@@ -1119,7 +1123,7 @@ def startGame():
         for enemy in enemies:
             all_sprites_list.remove(enemy)
         enemies.empty()
-    createLevel()
+
     if coop:
         try:
             coopGame = Network()  # Create new connection
@@ -1128,13 +1132,14 @@ def startGame():
             coop = False
             main()
 
+    createLevel()
     # Running game ---------------------------
     while running:
         Particle(player.rect.center, gray, 10)
         window.blit(BACKGROUND, (0, 0))
         createLevel()
 
-        # START THREADS ------------------------------------------------
+        # START THREADS ------------------------------------------------a
         run_shoot()
         collisions()
         wallCollisions()
@@ -1237,10 +1242,73 @@ class Button:
         label = font.render(self.text, True, white)
         label_rect = label.get_rect(center=(self.x + self.width / 2, self.y + self.height / 2))
         window.blit(label, label_rect)
+# Create a text field to type into --------------------
+textFields = []
+class TextField:
+
+    def __init__(self, text, x, y, w, h, color):
+        self.width = w
+        self.height = h
+        self.x = x - self.width / 2
+        self.y = y - self.height / 2
+        self.color = color
+        self.text = text
+        self.click = False
+        self.current_string = []
+        textFields.append(self)
+
+    def get_key(self):
+        while True:
+            event = pygame.event.poll()
+            if event.type == pygame.KEYDOWN:
+                return event.key
+            else:
+                return None
+
+    def listen(self):
+        listen = True
+        while listen:
+            inkey = self.get_key()
+            if inkey is not None:
+                if inkey == pygame.K_BACKSPACE:
+                    self.current_string = self.current_string[0:-1]
+                elif inkey == pygame.K_ESCAPE:
+                    listen = False
+                    self.click = False
+                elif inkey <= 127:
+                    self.current_string.append(chr(inkey))
+            self.update()
+        return "".join(self.current_string)
+
+    def draw(self):
+
+        pygame.font.init()
+        mouse = pygame.mouse.get_pos()
+        if self.x <= mouse[0] <= self.x + self.width and self.y <= mouse[1] <= self.y + self.height:
+            pygame.draw.rect(window, gray, [self.x, self.y, self.width, self.height], 3)
+
+        else:
+            pygame.draw.rect(window, self.color, [self.x, self.y, self.width, self.height], 3)
+
+        font = pygame.font.SysFont(font_name, 35)
+        if len(self.current_string) == 0:
+            label = font.render(self.text, True, white)
+        else:
+            label = font.render("".join(self.current_string), True, white)
+        label_rect = label.get_rect(center=(self.x + self.width / 2, self.y + self.height / 2))
+        window.blit(label, label_rect)
+
+
+    def update(self):
+        window.blit(BACKGROUND, (0, 0))
+        draw_text(window, self.text, 50, self.x + self.width / 2, self.y - self.height - 25, green)
+        draw_text(window, "Press ESCAPE to exit", 30, self.x + self.width / 2, self.y + self.height + 25, white)
+        self.draw()
+        pygame.display.update()
 
 #Main menu screen ###############################################################
 def main():
-    global god, coop, infinite, host, levelNum, select
+    global god, coop, infinite, host, levelNum, select, store, serverIP
     option = False
     coop = False
     pygame.mouse.set_visible(True)  # show the cursor
@@ -1250,8 +1318,10 @@ def main():
     levelSelect = Button("Select Level", SCREENWIDTH / 2 + 350, SCREENHEIGHT / 2, 200, 50, navy_blue)
     coopCreate = Button("Create Coop", SCREENWIDTH / 2 - 125, SCREENHEIGHT / 2 + 100, 200, 50, dark_gray)
     coopJoin = Button("Join Coop", SCREENWIDTH / 2 + 125, SCREENHEIGHT / 2 + 100, 200, 50, dark_gray)
+    ipText = TextField("Enter coop IP address here", SCREENWIDTH / 2 + 475, SCREENHEIGHT / 2 + 100, 450, 50, dark_gray)
     optionsButton = Button("Options", SCREENWIDTH / 2, SCREENHEIGHT / 2 + 200, 450, 50, dark_gray)
-    quitButton = Button("Exit Game", SCREENWIDTH / 2, SCREENHEIGHT / 2 + 300, 450, 50, dark_gray)
+    quitButton = Button("Exit Game", SCREENWIDTH / 2, SCREENHEIGHT / 2 + 400, 450, 50, dark_gray)
+
     # Options buttons ---
     godButton = Button("GOD MODE", SCREENWIDTH / 2 - 125, SCREENHEIGHT / 2 + 50, 200, 50, red)
     infButton = Button("INFINITE", SCREENWIDTH / 2 + 125, SCREENHEIGHT / 2 + 50, 200, 50, red)
@@ -1263,10 +1333,16 @@ def main():
         lb.append(Button(str(i + 1),SCREENWIDTH/3 + x, SCREENHEIGHT/2,50,50,blue))
         x += 100
 
+    #store button ----
+    storeButton = Button("Skin Shop", SCREENWIDTH / 2, SCREENHEIGHT / 2 + 300, 450, 50, purple)
+
+    # Create main menu background enemies --------
     y = 25
     for i in range(8):
         createEnemy(0, y, 100, 0)
         y += 125
+
+    # start menu loop -----
     menu = True
     while menu:
 
@@ -1279,7 +1355,7 @@ def main():
             if enemy.rect.x < 0:
                 enemy.rect.x = random.randint(SCREENWIDTH / 2, SCREENWIDTH)
                 enemy.changeSpeed(random.randint(50, 100))
-        # Check if any of the buttons were clicked -------
+        # Check if any of the buttons/textfields were clicked -------
         mouse = pygame.mouse.get_pos()
         for ev in pygame.event.get():
             if ev.type == pygame.MOUSEBUTTONDOWN:
@@ -1288,6 +1364,12 @@ def main():
                         button.click = True
                     else:
                         button.click = False
+
+                for field in textFields:
+                    if field.x <= mouse[0] <= field.x + field.width and field.y <= mouse[1] <= field.y + field.height:
+                        field.click = True
+                    else:
+                        field.click = False
 
         # Draw other window elements ------------------------
         for particle in particles:
@@ -1299,32 +1381,7 @@ def main():
 
         draw_text(window, "FLANK TANK", 200, SCREENWIDTH / 2, 250, green)
 
-        # Check if any of the buttons were clicked -------
-        if not option and not select:
-            if startButton.click:
-                loadingScreen()
-                startGame()
-            if levelSelect.click:
-                select = True
-            if coopCreate.click:
-                coop = True
-                host = True
-                startGame()
-            if coopJoin.click:
-                coop = True
-                startGame()
-            if optionsButton.click:
-                option = True
-            if quitButton.click:
-                menu = False
 
-            # draw buttons ---------------
-            startButton.draw()
-            levelSelect.draw()
-            coopCreate.draw()
-            coopJoin.draw()
-            optionsButton.draw()
-            quitButton.draw()
         if option:  # options menu
             if godButton.click:
                 god = True
@@ -1337,7 +1394,8 @@ def main():
             godButton.draw()
             infButton.draw()
             back.draw()
-        if select:
+
+        elif select and not infinite: #level select
             i = 0
             for button in lb:
                 if button.click:
@@ -1349,6 +1407,45 @@ def main():
             if back.click:
                 select = False
             back.draw()
+        elif store: # skin shop
+            shop = Shop()
+            shop.update()
+            if back.click:
+                store = False
+            back.draw()
+
+        # Show main buttons -------
+        else:
+            if startButton.click:
+                loadingScreen()
+                startGame()
+            if levelSelect.click:
+                select = True
+            if coopCreate.click:
+                coop = True
+                host = True
+                startGame()
+            if coopJoin.click:
+                coop = True
+                startGame()
+            if ipText.click:
+                serverIP = ipText.listen()
+            if optionsButton.click:
+                option = True
+            if storeButton.click:
+                store = True
+            if quitButton.click:
+                menu = False
+
+            # draw buttons ---------------
+            startButton.draw()
+            levelSelect.draw()
+            coopCreate.draw()
+            coopJoin.draw()
+            ipText.draw()
+            optionsButton.draw()
+            storeButton.draw()
+            quitButton.draw()
 
         clock.tick(60)
         pygame.display.update()

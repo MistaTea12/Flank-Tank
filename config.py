@@ -28,8 +28,12 @@ coop = False
 shoot = 0
 allyLocation = [0, 0]
 select = False
+# Store -----------------------------------------
+store = False
+skins = []
 # Network -------------------------------------------------
-serverIP = socket.gethostname()
+LOCALHOST = socket.gethostname()
+serverIP = socket.gethostbyname(LOCALHOST)
 host = False
 
 # sprites locations-------------------------------------------------
