@@ -27,6 +27,9 @@ class SpritePool():
     def put(self, key, filepath, convert_alpha = False):
         self.cache[key] = pygame.image.load(filepath).convert_alpha() if convert_alpha else pygame.image.load(filepath).convert()
 
+    def put_img(self, key, img):
+        self.cache[key] = img
+
 # initialize pygame ##############################################################################################
 pygame.init()
 
@@ -73,8 +76,14 @@ sprite_pool.put('CURSOR', CURSOR, convert_alpha=True)
 sprite_pool.put('SHIELD', SHIELD, convert_alpha=True)
 sprite_pool.put('PLAYER', PLAYER, convert_alpha=True)
 sprite_pool.put('ALLY', ALLY, convert_alpha=True)
-sprite_pool.put("TURRET", TURRET, convert_alpha=True)
+sprite_pool.put('TURRET', TURRET, convert_alpha=True)
 sprite_pool.put('BULLET', BULLET, convert_alpha=True)
+
+for angle in range(360 + 1):
+    img = sprite_pool.get('TURRET').copy()
+    img = pygame.transform.rotozoom(img, angle, 1)
+    sprite_pool.put_img('TURRET_rot_' + str(angle), img)
+
 ###########################################################################################################
 
 # Sprite groups ##############################################################################################
@@ -328,7 +337,9 @@ class Turret(pygame.sprite.Sprite):
     def get_angle(self, mouse):
         offset = (mouse[1] - self.rect.centery, mouse[0] - self.rect.centerx)
         self.angle = 270 - math.degrees(math.atan2(*offset))
-        self.barrel = pygame.transform.rotozoom(self.original_barrel, self.angle, 1)
+        self.angle = math.floor(self.angle - 360) if self.angle > 360 else math.floor(self.angle)
+
+        self.barrel = sprite_pool.get('TURRET_rot_' + str(self.angle)) # pygame.transform.rotozoom(self.original_barrel, self.angle, 1)
         self.rect = self.barrel.get_rect(center=self.rect.center)
 
     def draw(self):
