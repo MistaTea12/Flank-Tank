@@ -17,12 +17,65 @@ from config import *
 from levels import *
 from network import Network
 
+class SpritePool():
+    def __init__(self):
+        self.cache = {}
+
+    def get(self, key):
+        return self.cache[key]
+
+    def put(self, key, filepath, convert_alpha = False):
+        self.cache[key] = pygame.image.load(filepath).convert_alpha() if convert_alpha else pygame.image.load(filepath).convert()
+
 # initialize pygame ##############################################################################################
 pygame.init()
 
 # SET WINDOW ##############################################################################################
-window = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT))
+window = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT), pygame.DOUBLEBUF)
 pygame.display.set_caption('Flank Tank')
+
+# INIT SPRITES ############################################################################################
+sprite_pool = SpritePool()
+
+for i in range(4):
+    png = 'tank{img}.png'.format(img=str(i))
+    path = os.path.join('sprites', 'tank', png)
+    sprite_pool.put('PLAYER_rot_' + str(i), path, convert_alpha=True)
+    ally_png = 'tankAlly{img}.png'.format(img=str(i))
+    ally_path = os.path.join('sprites', 'tank', ally_png)
+    sprite_pool.put('ALLY_rot_' + str(i), ally_path, convert_alpha=True)
+
+for i in range(3):
+    png = 'enemy{img}.png'.format(img=str(i))
+    path = os.path.join('sprites', 'tank', png)
+    sprite_pool.put('ENEMY_' + str(i), path, convert_alpha=True)
+
+for i in range(14):
+    path = 'sprites/shield/shield_item{}.png'.format(i)
+    sprite_pool.put('SHIELD_rot_' + str(i), path)
+
+for i in range(2):
+    path = 'sprites/bounce/bounce0{}.png'.format(i)
+    sprite_pool.put('BOUNCE_rot_' + str(i), path)
+
+for i in range(9):
+    path = 'sprites/explosions/regularExplosion0{}.png'.format(i)
+    sprite_pool.put('EXPLOSION_rot_' + str(i), path)
+
+sprite_pool.put(WALL, WALL, convert_alpha=True)
+sprite_pool.put(WALLBREAK, WALLBREAK, convert_alpha=True)
+sprite_pool.put(SMALLWALL_UP, SMALLWALL_UP, convert_alpha=True)
+sprite_pool.put(SMALLWALL_SIDE, SMALLWALL_SIDE, convert_alpha=True)
+
+# sprite_pool.put(SHIELD_ITEM, SHIELD_ITEM)
+sprite_pool.put('BACKGROUND', BACKGROUND)
+sprite_pool.put('CURSOR', CURSOR, convert_alpha=True)
+sprite_pool.put('SHIELD', SHIELD, convert_alpha=True)
+sprite_pool.put('PLAYER', PLAYER, convert_alpha=True)
+sprite_pool.put('ALLY', ALLY, convert_alpha=True)
+sprite_pool.put("TURRET", TURRET, convert_alpha=True)
+sprite_pool.put('BULLET', BULLET, convert_alpha=True)
+###########################################################################################################
 
 # Sprite groups ##############################################################################################
 all_sprites_list = pygame.sprite.Group()
@@ -34,15 +87,14 @@ lasers = pygame.sprite.Group()
 shields = pygame.sprite.Group()
 pickups = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
-BACKGROUND = pygame.image.load(BACKGROUND).convert()
+BACKGROUND = sprite_pool.get('BACKGROUND')
 
 players = []  # play object list
 particles = []
 # Explosion Image Initializing ##############################################################################################
 explosion_anim = {'lg': [], 'sm': []}
 for i in range(9):
-    filename = 'sprites/explosions/regularExplosion0{}.png'.format(i)
-    img = pygame.image.load(filename).convert()
+    img = sprite_pool.get('EXPLOSION_rot_' + str(i))
     img.set_colorkey(black)
     img_lg = pygame.transform.scale(img, (200, 200))
     explosion_anim['lg'].append(img_lg)
@@ -52,8 +104,7 @@ for i in range(9):
 # Bounce image initializing ##############################################################################################
 bounce_anim = {'lg': [], 'sm': []}
 for i in range(2):
-    filename = 'sprites/bounce/bounce0{}.png'.format(i)
-    img = pygame.image.load(filename).convert()
+    img = sprite_pool.get('BOUNCE_rot_' + str(i))
     img.set_colorkey(black)
     img_lg = pygame.transform.scale(img, (150, 150))
     bounce_anim['lg'].append(img_lg)
@@ -63,8 +114,7 @@ for i in range(2):
 # Shield item initializing ##############################################################################################
 shield_anim = {'lg': [], 'sm': []}
 for i in range(14):
-    filename = 'sprites/shield/shield_item{}.png'.format(i)
-    img = pygame.image.load(filename).convert()
+    img = sprite_pool.get('SHIELD_rot_' + str(i))
     img.set_colorkey(black)
     img_lg = pygame.transform.scale(img, (150, 150))
     shield_anim['lg'].append(img_lg)
@@ -77,7 +127,7 @@ class Tank(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load(PLAYER).convert_alpha()
+        self.image = sprite_pool.get('PLAYER')
         self.rect = self.image.get_rect()
         self.health = 100
         self.health_bar = ProgressBar(self.health, self.health, (100, 10), green, gray, [self.rect.x,
@@ -115,9 +165,7 @@ class Tank(pygame.sprite.Sprite):
                 self.rect.y -= 2
             self.rect.move_ip(0, move_speed)
             self.rotate = 1
-        png = 'tank{img}.png'.format(img=str(self.rotate))
-        PLAYER = os.path.join('sprites', 'tank', png)
-        self.image = pygame.image.load(PLAYER).convert_alpha()
+        self.image = sprite_pool.get('PLAYER_rot_' + str(self.rotate))
 
     def draw(self):
         window.blit(self.image, self.rect)
@@ -143,7 +191,7 @@ class Ally(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load(ALLY).convert_alpha()
+        self.image = sprite_pool.get('ALLY')
         self.rect = self.image.get_rect()
         self.target = [0, 0]
         self.health = 100
@@ -156,9 +204,7 @@ class Ally(pygame.sprite.Sprite):
         players.append(self)
 
     def move(self):
-        png = 'tankAlly{img}.png'.format(img=str(self.rotate))
-        ALLY = os.path.join('sprites', 'tank', png)
-        self.image = pygame.image.load(ALLY).convert_alpha()
+        self.image = sprite_pool.get('ALLY_rot_' + str(self.rotate))
 
     def draw(self):
         window.blit(self.image, self.rect)
@@ -189,15 +235,12 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
         self.color = red
         self.colorb = gray
-        if strength == 0:
-            strength = ENEMY
-        elif strength == 1:
+        if strength == 1:
             self.color = purple
-            strength = ENEMY2
         elif strength == 2:
             self.color = yellow
-            strength = ENEMY3
-        self.image = pygame.image.load(strength).convert_alpha()
+            
+        self.image = sprite_pool.get('ENEMY_' + str(strength))
         self.rect = self.image.get_rect()
         self.speed = speed
         self.health = health
@@ -275,7 +318,7 @@ class Turret(pygame.sprite.Sprite):
         self.player = player
         self.base = base
         self.target = target
-        self.original_barrel = pygame.image.load(TURRET).convert_alpha()
+        self.original_barrel = sprite_pool.get('TURRET')
         self.barrel = self.original_barrel.copy()
         self.rect = self.barrel.get_rect(center=base.rect.center)
         self.angle = self.get_angle(target)
@@ -328,7 +371,7 @@ class Bullet(pygame.sprite.Sprite):
         else:
             enemy_bullet_list.add(self)
         all_sprites_list.add(self)
-        self.image = pygame.image.load(BULLET).convert_alpha()
+        self.image = sprite_pool.get('BULLET')
         self.bulletSpeed = bulletValue * 5
         self.rect = self.image.get_rect()
         self.change_y = 0
@@ -512,7 +555,7 @@ class Shield(pygame.sprite.Sprite):
         self.radius = r
         self.color = c
         self.armor = a
-        self.image = pygame.image.load(SHIELD).convert_alpha()
+        self.image = sprite_pool.get('SHIELD')
         self.rect = self.image.get_rect(center=[x, y])
         shields.add(self)
 
@@ -575,7 +618,7 @@ class PickUps(pygame.sprite.Sprite):
 
     def __init__(self, item, x, y):
         super().__init__()
-        self.image = pygame.image.load(item).convert()
+        self.image = sprite_pool.get(item)
         self.rect = self.image.get_rect(center=[x, y])
         pickups.add(self)
 
@@ -711,7 +754,7 @@ class Level(pygame.sprite.Sprite):
         walls.add(self)
         self.breakable = breakable
         try:
-            self.wall = pygame.image.load(image).convert_alpha()
+            self.wall = sprite_pool.get(image)
         except Exception as e:
             print(image, e)
         self.rect = self.wall.get_rect()
@@ -1071,6 +1114,9 @@ armor_bar = ProgressBar(100, tankShield.armor, (215, 25), sky_blue, gray, [15, S
 clock = pygame.time.Clock()
 
 
+# Create cursor image for default cursor ----------------------------------
+cursor = sprite_pool.get("CURSOR")
+
 def startGame():
     global score, addDifficulty, all_sprites_list, timer, nextLevel, laser_sight, specialAmmo, infinite, running, player, enemies, special_ability, shoot, coop, select
     if levelNum == 0 or select:
@@ -1123,8 +1169,6 @@ def startGame():
         if coop:
             coopGame.update()
 
-        # Create cursor image for default cursor ----------------------------------
-        cursor = pygame.image.load(CURSOR)
         pygame.mouse.set_visible(False)  # hide the cursor
         coordx, coordy = pygame.mouse.get_pos()
         window.blit(cursor, (coordx - 10, coordy - 10))
