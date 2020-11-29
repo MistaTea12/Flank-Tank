@@ -35,9 +35,9 @@ host = False
 # sprites locations-------------------------------------------------
 PLAYER = os.path.join('sprites', 'tank', 'tank0.png')
 ALLY = os.path.join('sprites', 'tank', 'tankAlly0.png')
-ENEMY = os.path.join('sprites', 'tank', 'enemy.png')
-ENEMY2 = os.path.join('sprites', 'tank', 'enemy2.png')
-ENEMY3 = os.path.join('sprites', 'tank', 'enemy3.png')
+ENEMY = os.path.join('sprites', 'tank', 'enemy0.png')
+ENEMY2 = os.path.join('sprites', 'tank', 'enemy1.png')
+ENEMY3 = os.path.join('sprites', 'tank', 'enemy2.png')
 TURRET = os.path.join('sprites', 'tank', 'turret.png')
 SHIELD = os.path.join('sprites', 'other', 'shield.png')
 WALL = os.path.join('sprites', 'level', 'wall.png')
