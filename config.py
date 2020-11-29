@@ -32,7 +32,8 @@ select = False
 store = False
 skins = []
 # Network -------------------------------------------------
-serverIP = socket.gethostname()
+LOCALHOST = socket.gethostname()
+serverIP = socket.gethostbyname(LOCALHOST)
 host = False
 
 # sprites locations-------------------------------------------------
