@@ -43,9 +43,7 @@ class ClientThread(threading.Thread):
 		currentPlayer -= 1
 
 
-LOCALHOST = socket.gethostname()
-IP = socket.gethostbyname(LOCALHOST)
-print("HOST IP ADDRESS:", IP)
+IP = "0.0.0.0"
 PORT = 5555
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
